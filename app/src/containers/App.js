@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Nav, NavItem, Navbar } from 'react-bootstrap';
+import { authUser } from "../libs/awsLib";
 import RouteNavItem from "../components/RouteNavItem";
 import Routes from '../Routes';
 
@@ -11,8 +12,22 @@ class App extends Component {
     super(props);
 
     this.state = {
-      isAuthenticated: false
+      isAuthenticated: false,
+      isAuthenticating: true
     };
+  }
+
+  async componentDidMount() {
+    try {
+      if (await authUser()) {
+        this.userHasAuthenticated(true);
+      }
+    }
+    catch(e) {
+      alert(e);
+    }
+
+    this.setState({ isAuthenticating: false });
   }
 
   userHasAuthenticated = authenticated => {
@@ -22,38 +37,42 @@ class App extends Component {
   handleLogout = event => {
     this.userHasAuthenticated(false);
   }
-  
+
   render() {
     const childProps = {
       isAuthenticated: this.state.isAuthenticated,
       userHasAuthenticated: this.userHasAuthenticated
     };
     return (
+      !this.state.isAuthenticating &&
       <div className="App container">
-        <Navbar fluid collapseOnSelect>
-          <Navbar.Header>
-            <Navbar.Brand>
-              <Link to='/'>Scratch</Link>
-            </Navbar.Brand>
-            <Navbar.Toggle />
-          </Navbar.Header>
-          <Navbar.Collapse>
-          { this.state.isAuthenticated
-            ? <NavItem onClick={this.handleLogout}>Logout</NavItem>
-            : [
-              <RouteNavItem key={1} href="/signup">
-                Signup
-              </RouteNavItem>,
-              <RouteNavItem key={2} href="/login">
-                Login
-              </RouteNavItem>
-            ]
-          }
-          </Navbar.Collapse>
-        </Navbar>
-        <Routes childProps={ childProps }/>
-      </div>
-    );
+      <Navbar fluid collapseOnSelect>
+        <Navbar.Header>
+          <Navbar.Brand>
+            <Link to="/">Scratch</Link>
+          </Navbar.Brand>
+          <Navbar.Toggle />
+        </Navbar.Header>
+        <Navbar.Collapse>
+          <Nav pullRight>
+            {
+              this.state.isAuthenticated
+              ? <NavItem onClick={this.handleLogout}>Logout</NavItem>
+              : [
+                <RouteNavItem key={1} href="/signup">
+                  Signup
+                </RouteNavItem>,
+                <RouteNavItem key={2} href="/login">
+                  Login
+                </RouteNavItem>
+                ]
+            }
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
+      <Routes childProps={childProps} />
+    </div>
+  );
   }
 }
 

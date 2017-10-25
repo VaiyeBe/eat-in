@@ -9,9 +9,6 @@ import LoaderButton from '../containers/LoaderButton';
 import keys from '../keys';
 import '../css/Signup.css';
 
-// need to import the aws-signup process and then inject it into the handleSubmit event
-// if I can't get the authorization to work based off the aws cognito login I may have to switch this all over to backendless
-
 export default class Signup extends Component {
   constructor(props) {
     super(props);
@@ -39,7 +36,6 @@ export default class Signup extends Component {
   }
 
   handleChange = event => {
-    event.preventDefault();
     this.setState({
       [event.target.id]: event.target.value
     });

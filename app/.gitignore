@@ -6,6 +6,7 @@
 
 # production
 /build
+/src/creds
 
 # misc
 .DS_Store

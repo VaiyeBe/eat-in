@@ -6,7 +6,11 @@ import {
   ControlLabel
 } from 'react-bootstrap';
 import LoaderButton from '../components/LoaderButton';
+import creds from '../creds';
 import '../css/signup';
+
+// need to import the aws-signup process and then inject it into the handleSubmit event
+// if I can't get the authorization to work based off the aws cognito login I may have to switch this all over to backendless
 
 export default class Signup extends Component {
   constructor(props) {

@@ -1,3 +1,28 @@
+# dependencies
+/app/node_modules
+/eatin-app-api/node_modules
+/eatin-app-api/jspm_packages
+
+# testing
+/app/coverage
+
+# production
+/app/build
+/app/src/creds.js
+
 # misc
 .DS_Store
-.gitignore
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+/app/npm-debug.log*
+/app/yarn-debug.log*
+/app/yarn-error.log*
+
+# Serverless directories
+/eatin-app-api/.serverless
+
+# misc
+.DS_store

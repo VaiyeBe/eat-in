@@ -17,6 +17,7 @@ class App extends Component {
     };
   }
 
+  // need to figure out how to move this promise based feature out of componentDidMount()?
   async componentDidMount() {
     try {
       if (await authUser()) {
@@ -34,6 +35,8 @@ class App extends Component {
     this.setState({ isAuthenticated: authenticated });
   }
 
+  // the logout event is a user-specific function. This may need to be handed over to a state management tool.
+  // i.e. import a state manangement store into this parent app export and then invoke these functions from that.
   handleLogout = event => {
     signOutUser();
 
@@ -42,6 +45,8 @@ class App extends Component {
     this.props.history.push('/login');
   }
 
+  // I don't love that we have to define childProps in a rendering function.
+  // Goal: try to move this outside of this render function.
   render() {
     const childProps = {
       isAuthenticated: this.state.isAuthenticated,
@@ -74,7 +79,7 @@ class App extends Component {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
-      <Routes childProps={childProps} />
+      <Routes childProps={ childProps } />
     </div>
   );
   }

@@ -5,9 +5,9 @@ import {
   FormControl,
   ControlLabel
 } from 'react-bootstrap';
-import LoaderButton from '../components/LoaderButton';
-import creds from '../creds';
-import '../css/signup';
+import LoaderButton from '../containers/LoaderButton';
+import keys from '../keys';
+import '../css/Signup.css';
 
 // need to import the aws-signup process and then inject it into the handleSubmit event
 // if I can't get the authorization to work based off the aws cognito login I may have to switch this all over to backendless
@@ -39,6 +39,7 @@ export default class Signup extends Component {
   }
 
   handleChange = event => {
+    event.preventDefault();
     this.setState({
       [event.target.id]: event.target.value
     });
@@ -91,7 +92,7 @@ export default class Signup extends Component {
           />
         </FormGroup>
         <FormGroup controlId="password" bsSize="large">
-          <ControlLabel>Password></ControlLabel>
+          <ControlLabel>Password</ControlLabel>
           <FormControl
             value={ this.state.password }
             onChage={ this.handleChange }
@@ -99,7 +100,7 @@ export default class Signup extends Component {
           />
         </FormGroup>
         <FormGroup controlId="confirmPassword" bsSize="large">
-          <ControlLabel>Confirm Password></ControlLabel>
+          <ControlLabel>Confirm Password</ControlLabel>
           <FormControl
             value={ this.state.password }
             onChage={ this.handleChange }
@@ -109,7 +110,7 @@ export default class Signup extends Component {
         <LoaderButton
           block
           bsSize="large"
-          disabled={ !this.validatForm() }
+          disabled={ !this.validateForm() }
           type="submit"
           isLoading={ this.state.isLoading }
           text="Signup"
